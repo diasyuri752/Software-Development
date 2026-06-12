@@ -1,0 +1,16 @@
+<html>
+    <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"> </script> -->
+    <script src="jquery-3.3.1.js"> </script> 
+<script>
+
+function test(){
+    $.ajax({url:"soma.php?n1=5&n2=10", success:function(result){
+    $("div").text(result);}
+})
+} 
+</script>
+
+<button onclick="test()"> Click </button>
+<div> </div>
+</html>
+

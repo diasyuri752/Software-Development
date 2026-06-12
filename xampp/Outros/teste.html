@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+    <table>
+        <tr><td>Nome:</td> <td><input type="text" id="name" name="bglh"></td></tr>
+        
+        <tr><td><button type="submit" onclick="Registrar(bglh.value)" class="but">Registrar</button></td></tr>
+
+   
+        <script>
+            function Registrar()
+            {  
+                nome=document.getElementsById("name").value;
+                alert(nome);
+                $.ajax
+            ({
+                url:'Registro.php',
+                method:'post',
+                data:{'nome':nome}
+            }).done(function (resposta)
+            {
+        
+            })
+            }
+        </script>
+        
+</body>
+</html>

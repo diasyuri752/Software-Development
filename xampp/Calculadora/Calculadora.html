@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+
+    <!--Adicionando biblioteca de JS-->
+    <script src="jquery-3.6.0.min.js"></script> 
+
+    <!--CSS-->
+    <style>
+        body
+        {
+            background-image: url("ricardo.jpg");
+            background-size: cover;
+            background-repeat: round;
+        }
+        table
+        {
+            width: 100px;
+            height: 200px;
+            padding: 10px;
+            border-color: aliceblue;
+            border-radius: 10px;
+            transform: translate(-16%, 0%);
+            background-color: rgb(210, 215, 218);
+            margin-bottom: 38px;
+            margin-left: 30px;
+        }
+        .fundo
+        {
+            border-radius: 10px;
+            position: absolute;  
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .botao
+        {        
+            border-color: rgb(188, 198, 200);
+            background-color: rgb(194, 204, 206);
+            color: rgb(105, 108, 97);
+            width: 95px;
+            height: 72px;
+            font-size: 40px;
+            border-radius: 15px;
+        }
+        .botaoigual
+        {
+            border-color: rgb(188, 198, 200);
+            background-color: rgb(194, 204, 206);
+            color: rgb(105, 108, 97);
+            width: 95px;
+            height: 147px;
+            font-size: 40px;
+            border-radius: 15px;         
+        }
+        .result
+        {
+            background-color: rgb(193, 197, 180);
+            color: rgb(105, 108, 97);
+            width: 490px;
+            height: 85px;
+            font-size: 40px;
+            border-radius: 15px;
+            text-align: right;
+        }
+        .adjust
+        {
+          margin-top: 720px;
+          margin-left: 1345px;
+          font-size: 20px;
+          color: rgb(40, 194, 199);
+        }
+    </style>
+
+</head>
+<body>
+    <h1 class="adjust">.</h1>
+    <div class="fundo">
+        <table>
+
+            <tr>
+            <td colspan="5"><input type="text" name="result" class="result" id="result" value="" disabled="disabled"></td>
+            </tr>
+     
+            <tr>
+            <td><input type="button" class="botao" name="btvoltar" value="<" onclick="voltar()"></td>
+            <td><input type="button" class="botao" name="btvoltar2" value="CE" onclick="voltar2()"></td>
+            <td><input type="button" class="botao" name="btlimpar" value="C" onclick="limpar()"></td> 
+            <td><input type="button" class="botao" name="btn!" value="n!" onclick="fatorial()"></td>
+            <td><input type="button" class="botao" name="btraiz" value="√" onclick="raiz()"></td>
+            </tr>
+
+            <tr>  
+            <td><input type="button" class="botao" name="bt7" value="7" onclick="mostrarnum('7')"></td>
+            <td><input type="button" class="botao" name="bt8" value="8" onclick="mostrarnum('8')"></td> 
+            <td><input type="button" class="botao" name="bt9" value="9" onclick="mostrarnum('9')"></td> 
+            <td><input type="button" class="botao" name="btdiv" value="/" onclick="mostrarnum2('/')"></td>
+            <td><input type="button" class="botao" name="btao2" value="X²" onclick="aoquadrado()"></td>
+            </tr>
+
+            <tr>
+            <td><input type="button" class="botao" name="bt4" value="4" onclick="mostrarnum('4')"></td> 
+            <td><input type="button" class="botao" name="bt5" value="5" onclick="mostrarnum('5')"></td> 
+            <td><input type="button" class="botao" name="bt6" value="6" onclick="mostrarnum('6')"></td>  
+            <td><input type="button" class="botao" name="btmult" value="*" onclick="mostrarnum2('*')"></td> 
+            <td><input type="button" class="botao" name="btao3" value="X³" onclick="aocubo()"></td>    
+            </tr>
+
+            <tr>
+            <td><input type="button" class="botao" name="bt1" id="1" value="1" onclick="mostrarnum()"></td> 
+            <td><input type="button" class="botao" name="bt2" value="2" onclick="mostrarnum('2')"></td> 
+            <td><input type="button" class="botao" name="bt3" value="3" onclick="mostrarnum('3')"></td>      
+            <td><input type="button" class="botao" name="btsub" value="-" onclick="mostrarnum2('-')"></td>  
+            <td rowspan="2"><input type="button" class="botaoigual" name="btigual" value="=" onclick="igual()"></td>
+            </tr>
+
+            <tr>
+            <td><input type="button" class="botao" name="btpi" value="π" onclick="pi()"></td>
+            <td><input type="button" class="botao" name="bt0" value="0" onclick="mostrarnum(0)"></td> 
+            <td><input type="button" class="botao" name="btponto" value="." onclick="mostrarnum2('.')"></td>
+            <td ><input type="button" class="botao" name="btadd" value="+" onclick="mostrarnum2('+')"></td>
+            </tr>
+
+            </table>
+        </div>
+</body>
+</html>
+
+<!--JavaScript-->
+<script>
+ x=0;
+ y=0;
+ z=0;
+
+//Função que adiciona elementos 
+function mostrarnum(n1)
+{   if(y==60)
+    {
+        alert("Limpe antes de prosseguir!")
+    }
+    else{
+    $.ajax
+    ({
+        url:'Calculo.php',
+        method:'post',
+        data:{'valor':n1}
+    }).done(function (resposta)
+    {
+        x=0;
+        y=0;
+        document.getElementById("result").value=document.getElementById("result").value+resposta;
+    })}
+}
+
+//Função que calcula o resultado da operação
+function igual()
+{
+    n2=document.getElementById("result").value;
+
+    if(y==60)
+    {
+        alert("Limpe antes de prosseguir!")
+    }
+    else if( n2=="" || x>=1)
+    {
+        alert("Operação inválida!");
+    }
+    else
+    {
+        z=n2;
+        document.getElementById("result").value=eval(n2);
+    }
+}
+
+//Função de limpar
+function limpar()
+{
+    document.getElementById("result").value="";
+    x=0;
+    y=0;
+}
+
+//Função que limpa um caractere
+function voltar()
+{
+    if(y==60)
+    {
+        alert("Limpe antes de prosseguir!")
+    }
+    else{
+    volt=document.getElementById("result").value;
+    lastchar=volt.slice(-1);
+    document.getElementById("result").value=(document.getElementById("result").value-lastchar)/10;
+} 
+}
+
+//Função que retorna um valor elevado ao quadrado
+function aoquadrado()
+{   
+    n3=document.getElementById("result").value;
+    
+    if(y==60)
+    {
+        alert("Limpe antes de prosseguir!")
+    }
+
+    else if( n3=="" || x>=1)
+    {
+        alert("Operação inválida!");
+    }
+   else
+   { 
+    $.ajax
+    ({
+        url:'Calculo.php',
+        method:'post',
+        data:{'valor3':n3}
+    }).done(function (resposta3)
+    {
+        document.getElementById("result").value=resposta3;
+    })
+    }
+}
+
+//Função que retorna um valor elevado ao cubo
+function aocubo()
+{   
+    n4=document.getElementById("result").value;
+    
+    if(y==60)
+    {
+        alert("Limpe antes de prosseguir!")
+    }
+
+    else if( n4=="" || x>=1)
+    {
+        alert("Operação inválida!");
+    }
+   else
+   { 
+    $.ajax
+    ({
+        url:'Calculo.php',
+        method:'post',
+        data:{'valor4':n4}
+    }).done(function (resposta4)
+    {
+        document.getElementById("result").value=resposta4;
+    })
+    }
+}
+
+//Função que retorna a raiz 
+function raiz()
+{   
+    n5=document.getElementById("result").value;
+
+    if(y==60)
+    {
+        alert("Limpe antes de prosseguir!")
+    }
+    else if( n5=="" || x>=1)
+    {
+        alert("Operação inválida!");
+    }
+    else{
+    $.ajax
+    ({
+        url:'Calculo.php',
+        method:'post',
+        data:{'valor5':n5}
+    }).done(function (resposta5)
+    {
+        document.getElementById("result").value=resposta5;
+    })}
+}
+
+//Função que retorna o valor de pi
+function pi()
+{
+    document.getElementById("result").value="3,14159265358979323846";
+    x=0;
+    y=60;
+}
+
+//Função de fatorial
+function fatorial()
+{
+    n6=document.getElementById("result").value;
+
+    if(y==60)
+    {
+    alert("Limpe antes de prosseguir!")
+    }
+    else if( n6=="" || x>=1)
+    {
+        alert("Operação inválida!");
+    }
+    else
+    {
+    $.ajax
+    ({
+        url:'Calculo.php',
+        method:'post',
+        data:{'valor6':n6}
+    }).done(function (resposta6)
+    {
+        document.getElementById("result").value=resposta6;
+    })
+    }
+}
+
+//Função que verifica se algum sinal ou ponto já foi inserido
+function mostrarnum2(n1)
+{   if(y==60)
+    {
+        alert("Limpe antes de prosseguir!")
+    }
+    else if(x>=1 ||  document.getElementById("result").value=="")
+    {
+        alert("Operação inválida!");
+    }
+    else if(x==0)
+    ( 
+        $.ajax
+    ({
+        url:'Calculo.php',
+        method:'post',
+        data:{'valor':n1}
+    }).done(function (resposta)
+    {
+        x++;
+        document.getElementById("result").value=document.getElementById("result").value+resposta;
+    })
+    )
+}
+
+//Função que retorna a operação realizada
+function voltar2()
+{
+    document.getElementById("result").value=z;
+    x=0;
+    y=0;
+}
+</script> 

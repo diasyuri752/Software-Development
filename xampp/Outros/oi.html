@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>LP4-18/04/2022</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <form name="formu">
+        <table>
+            <tr><td>Seu Nome:</td> <td><input type="text" name="nome"></td></tr>
+            <tr><td>Seu E-mail:</td> <td><input type="email" name="email"></td></tr>
+            <tr><td>CPF:</td> <td><input type="text" name="cpf" /></td></tr>
+            <tr><td>Sexo:</td> <td><input type="radio" name="sexo" value="Feminino">Feminino<input type="radio" name="sexo" value="Masculino">Masculino</td></tr>
+            <tr><td>Que dia você nasceu?</td> <td><input type="date" name="data_nascimento"></td></tr>
+            <tr><td>Cidade:</td> <td><input type="text" name="cidade"></td></tr>
+            <tr>
+                <td>Estado:</td>
+                <td>
+                    <select name="estado">
+                        <option value="UF">UF</option>
+                        <option value="rj">RJ</option>
+                        <option value="sp">SP</option>
+                        <option value="mg">MG</option>
+                        <option value="es">ES</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <!-- ESCOLARIDADE -->
+            <tr>
+                <td> Escolaridade</td>
+                <td>
+                    <input type="radio" name="escolaridade" value="EFI"> Ensino Fundamental Incompleto<br>
+
+                    <input type="radio" name="escolaridade" value="EFC"> Ensino Fundamental Completo<br>
+
+                    <input type="radio" name="escolaridade" value="EMI"> Ensino Médio Incompleto<br>
+
+                    <input type="radio" name="escolaridade" value="EMC"> Ensino Médio Completo<br>
+
+                    <input type="radio" name="escolaridade" value="ESI"> Ensino Superior Incompleto<br>
+
+                    <input type="radio" name="escolaridade" value="ESC"> Ensino Superior Completo<br>
+                </td>
+            </tr>
+            <!-- FIM ESCOLARIDADE -->
+
+            <tr><td>Crie um Login:</td> <td><input type="text" name="login">(no máx. 12 caracteres, só letras MINÚSCULAS)</td></tr>
+            <tr><td>Crie uma Senha:</td> <td><input type="password" name="senha">(no máx. 8 caracteres, só letras MINÚSCULAS)</td></tr>
+            <tr><td>Confirmar sua Senha:</td> <td><input type="password" name="confirmar_senha"></td></tr>
+            <tr><td colspan="2"><input type="checkbox" name="news">Eu gostaria de receber semanalmente as novidades do Fotos da Galera do chat!</td></tr>
+            <tr>
+                <td>
+                    <button type="button" onclick="Send(nome.value, email.value, cpf.value, sexo.value, data_nascimento.value, cidade.value, estado.value, escolaridade.value, login.value, senha.value, confirmar_senha.value);">
+                        Enviar
+                    </button>
+                </td>
+                <td><button type="reset"> Apagar </button> 
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function Send(nome, email, cpf, sexo, data_nascimento, cidade, estado, escolaridade, login, senha, confirmar_senha)
+        {
+            x = 0;
+            y = 0;
+
+            //Scrypt Nome
+            for (j = 0; j < nome.length; j++) {
+
+                if (nome[j] == " ") {
+
+                    x++;
+
+                }
+
+            }
+
+            if (x < 2)
+            {
+                alert("Por favor informe seu nome completo!");
+                document.formu.nome.focus();
+                y++;
+            }
+            //Fim do Scrypt Nome
+
+            //Scrypt Email
+            x = 0;
+
+            for (j = 0; j < email.length; j++)
+                if (email[j] == "@")
+                    x++;
+
+            if (x != 1 && y < 1)
+            {
+
+                alert("Por favor, informe seu e-mail!");
+                document.formu.email.focus();
+                y++;
+
+            }
+            //Fim do Scrypt Email
+
+            //Scrypt CPF
+            if ((cpf[3] != "." || cpf[7] != "." || cpf[11] != "-" || cpf.length != 14) && y < 1)
+            {
+                alert("Por favor, digite um CPF válido!");
+                document.formu.cpf.focus();
+                y++;
+            }
+            //Fim do Scrypt CPF
+
+            //Scrypt Sexo
+            if (sexo == "" && y < 1)
+            {
+                alert("Por favor, informe seu sexo!");
+                document.formu.sexo.focus();
+                y++;
+
+            }
+            //Fim do Scrypt Sexo
+
+            //Scrypt Nascimento
+            if (data_nascimento == "" && y < 1)
+            {
+                alert("Por favor, informe sua data de nascimento!");
+                document.formu.data_nascimento.focus();
+                y++;
+
+            }
+            //Fim do Scrypt Nascimento
+
+            //Scrypt Cidade
+            if (cidade == "" && y < 1)
+            {
+                alert("Por favor, informe sua cidade!");
+                document.formu.cidade.focus();
+                y++;
+            }
+            //Fim do Scrypt Cidade
+
+            //Scrypt Estado
+            if (estado == "UF" && y < 1)
+            {
+                alert("Por favor, informe seu estado!");
+                document.formu.estado.focus();
+                y++;
+            }
+            //Fim do Scrypt Estado
+
+            //Scrypt Escolaridade
+            if (escolaridade == "" && y < 1)
+            {
+                alert("Por favor, informe sua escolaridade!");
+                document.formu.escolaridade.focus();
+                y++;
+            }
+            //Fim do Scrypt Escolaridade
+
+            //Scrypt Login
+            if ((login.length > 12 || login == "" || login != login.toLowerCase()) && y < 1)
+            {
+                alert("Por favor, digite um login válido!");
+                document.formu.login.focus();
+                y++;
+            }
+            //Fim do Scrypt Login
+
+            //Scrypt Senha
+            if ((senha.length > 8 || senha == "" || senha != senha.toLowerCase()) && y < 1)
+            {
+                alert("Por favor, insira uma senha válida!");
+                document.formu.senha.focus();
+                y++;
+            }
+            
+            if (confirmar_senha != senha && y < 1)
+            {
+                alert("Por favor, confirme a sua senha!");
+                document.formu.confirmar_senha.focus();
+                y++;
+            }
+            //Fim do Scrypt Senha
+
+            //Confirmação de Envio
+            if (y < 1)
+                alert("Dados enviados com sucesso!");
+            //Fim Função
+        }
+    </script>
+</body>
+</html>
